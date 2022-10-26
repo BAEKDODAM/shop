@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Navbar, Container, Nav, Row, Col, NavLink } from 'react-bootstrap';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
@@ -8,9 +8,16 @@ import axios from 'axios';
 import Cart from './routes/Cart';
 
 function App() {
+
   let [shoes, setShoes] = useState(data); //서버에서 가져온 데이터라고 가정
   let navigate = useNavigate(); // 페이지 이동 도와줌
   let n=0;
+  useEffect(()=>{
+    if (localStorage.getItem('watched')==null){
+      console.log('null')
+      localStorage.setItem('watched', JSON.stringify( [] ))
+    }
+  })
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
@@ -62,8 +69,12 @@ function App() {
 
 
 function Card(props) {
+  let navigate = useNavigate();
+  let onClickItem=(i)=>{
+    navigate(`/detail/${i}`)
+  }
   return (
-    <div className="col-md-4">
+    <div className="col-md-4" onClick={()=>onClickItem(props.i)}>
       <img src={'https://codingapple1.github.io/shop/shoes' + (props.i+1) + '.jpg'} width="80%" />
       <h4>{ props.shoes.title }</h4>
       <p>{ props.shoes.price }</p>

@@ -10,9 +10,21 @@ function Detail(props) {
     let {id} = useParams();
     let 찾은상품 = props.shoes.find((x)=> x.id == id )
     let [alert, setAlert] = useState(true)
+
+    //Set으로 바꿨다가 다시 array로 만들어서 중복 제거
     let [tab, setTab] = useState(0)
     let [fade2, setFade2] = useState('')
     let dispatch = useDispatch()
+
+    useEffect(()=>{
+        let watchedItems = localStorage.getItem('watched')
+        watchedItems = JSON.parse(watchedItems)
+        watchedItems.push(찾은상품.id)
+
+        watchedItems = new Set(watchedItems)
+        watchedItems = Array.from(watchedItems)
+        localStorage.setItem('watched', JSON.stringify(watchedItems))
+    },[])
 
     useEffect(()=>{// Detail 컴포넌트가 mount, update될 때 실행됨. html  랜더링 후 동작함.
         let a = setTimeout(()=>{ setAlert(false)},2000)
