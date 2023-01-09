@@ -6,18 +6,27 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/Detail';
 import axios from 'axios';
 import Cart from './routes/Cart';
+import {useQuery} from "react-query";
 
 function App() {
 
   let [shoes, setShoes] = useState(data); //서버에서 가져온 데이터라고 가정
   let navigate = useNavigate(); // 페이지 이동 도와줌
   let n=0;
+
+  let result = useQuery('작명', ()=>{
+    return axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
+      return a.data
+    })
+  })
+
   useEffect(()=>{
     if (localStorage.getItem('watched')==null){
       console.log('null')
       localStorage.setItem('watched', JSON.stringify( [] ))
     }
   })
+
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
@@ -27,6 +36,9 @@ function App() {
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link onClick={()=>{ navigate('/cart') }}>Cart</Nav.Link>
             <Nav.Link as={Link} to="/detail">Detail</Nav.Link>
+          </Nav>
+          <Nav className="ms-auto">
+            { result.isLoading ? '로딩중...' : result.data.name }
           </Nav>
         </Container>
       </Navbar>
