@@ -1,12 +1,22 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Button, Navbar, Container, Nav, Row, Col, NavLink } from 'react-bootstrap';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-import Detail from './routes/Detail';
 import axios from 'axios';
-import Cart from './routes/Cart';
 import {useQuery} from "react-query";
+
+//import Detail from './routes/Detail';
+//import Cart from './routes/Cart';
+
+// 메인 페이지에서 디테일 페이지와 장바구니 페이지는 꼭 바로 import할 필요 없음
+// 그래서 나중에 필요할 때 import 해오기 위해 lazy 사용
+// 사이트 발행할 때 별도의 js 파일로 분리됨
+const Detail = lazy(()=> import('./routes/Detail.js'))
+const Cart = lazy(()=> import('./routes/Cart.js'))
+// 단점: cart, detail 컴포넌트 로딩시간 발생
+// 장점: 메인 페이지 로딩 속도 개선
+
 
 function App() {
 
@@ -43,6 +53,7 @@ function App() {
         </Container>
       </Navbar>
 
+      <Suspense fallback={<div>로딩중</div>}>
       <Routes>
         <Route path='/' element={
           <>
@@ -75,6 +86,7 @@ function App() {
         <Route path="/cart" element={ <Cart/> }/>
         <Route path='*' element={<div>없는 페이지</div> } />
       </Routes>
+      </Suspense>
     </div>
   );
 }
