@@ -45,7 +45,7 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link onClick={()=>{ navigate('/cart') }}>Cart</Nav.Link>
-            <Nav.Link as={Link} to="/detail">Detail</Nav.Link>
+            {/*<Nav.Link as={Link} to="/detail">Detail</Nav.Link>*/}
           </Nav>
           <Nav className="ms-auto">
             { result.isLoading ? '로딩중...' : result.data.name }
@@ -69,7 +69,7 @@ function App() {
             }
             </div>
           </div>
-          <button onClick={()=>{
+          <button className='button' onClick={()=>{
             n+=1
             if(n==1) {
               axios.get('https://codingapple1.github.io/shop/data2.json')

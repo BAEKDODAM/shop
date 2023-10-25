@@ -49,3 +49,23 @@
     transform: rotate(360deg);
   }
 }
+
+.button {
+  padding: 10px 15px;
+  border-radius: 15%;
+  border: solid 2px gray;
+  background-color:white;
+  margin-top: 50px;
+  margin-bottom: 80px;
+}
+.button2 {
+  padding: 0 10px;
+  border-radius: 20%;
+  border: solid 1px gray;
+  background-color:white;
+}
+.cart_member {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: large;
+}

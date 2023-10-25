@@ -7,7 +7,7 @@ import {addCount} from './../store'
 // 내가 원하는 자식 컴포넌트의 재랜더링을 막고 싶을 때 memo 사용
 let Child = memo( function() { 
     console.log("재랜더링됨")
-    return <div>자식임</div>
+    //return <div>자식임</div>
 })
 function Cart() {
 
@@ -21,9 +21,8 @@ function Cart() {
     return (
         <div>
             <Child></Child>
-            <button onClick={()=>{ setCount(count+1) }}>+</button>
 
-            <h6>{state.user.name}, {state.user.age}의 장바구니</h6>
+            <div className='cart_member'>{state.user.name}, {state.user.age}의 장바구니</div>
             {/*<button onClick={() => {
                 dispatch(increase(5))
             }}>버튼</button>*/}
@@ -46,7 +45,7 @@ function Cart() {
                                 <td>{a.name}</td>
                                 <td>{a.count}</td>
                                 <td>
-                                    <button onClick={()=>{
+                                    <button className='button2' onClick={()=>{
                                         dispatch(addCount(a.id))
                                     }}>+</button>
                                 </td>
